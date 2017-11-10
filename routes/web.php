@@ -19,4 +19,4 @@ $router->get('/', function () use ($router) {
 * users
 */
 $router->get('users', 'UserController@index');
-$router->get('user/{id}', 'UserController@show');
+$router->get('users/{id}', 'UserController@show');
