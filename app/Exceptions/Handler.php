@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +47,10 @@ class Handler extends ExceptionHandler
   */
   public function render($request, Exception $e)
   {
+    if ($e instanceof MethodNotAllowedHttpException) {
+      return response()->json((['code' => 405, 'message' => 'The specified method for the request is invalid']), 405);
+    }
+
     if ($e instanceof NotFoundHttpException) {
       return response()->json((['code' => 404, 'message' => 'The specified URL cannot be found']), 404);
     }
