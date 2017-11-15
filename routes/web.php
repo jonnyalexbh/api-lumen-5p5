@@ -20,3 +20,7 @@ $router->get('/', function () use ($router) {
 */
 $router->get('users', 'UserController@index');
 $router->get('users/{id}', 'UserController@show');
+
+$router->group(['middleware' => ['auth:api']], function () use ($router) {
+  $router->get('users-auth', 'UserController@index');
+});
